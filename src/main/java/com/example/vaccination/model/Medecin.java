@@ -1,7 +1,7 @@
 package com.example.vaccination.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 public class Medecin {
@@ -11,12 +11,33 @@ public class Medecin {
 
     private String nom;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "centre_id")
+    @JsonBackReference // Empêche la boucle infinie lors de la sérialisation JSON
     private Centre centre;
 
-    @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL)
-    private List<RendezVous> rendezVous;
+    // Getters et setters
+    public Long getId() {
+        return id;
+    }
 
-    // Getters et Setters
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Centre getCentre() {
+        return centre;
+    }
+
+    public void setCentre(Centre centre) {
+        this.centre = centre;
+    }
 }
