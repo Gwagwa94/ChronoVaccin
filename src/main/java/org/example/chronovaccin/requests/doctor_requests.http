@@ -1,0 +1,18 @@
+GET http://localhost:8080/doctors?name=Mario
+
+###
+
+DELETE http://localhost:8080/doctor/0
+
+###
+
+POST http://localhost:8080/doctors
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Gregory House",
+  "address": {
+    "id": 3
+  }
+}

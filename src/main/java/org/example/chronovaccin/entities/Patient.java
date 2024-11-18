@@ -1,4 +1,4 @@
-package org.example.chronovaccin.service;
+package org.example.chronovaccin.entities;
 
 import java.util.Date;
 
@@ -19,7 +19,7 @@ public class Patient {
     private Date birthDate;
 
     @OneToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "address_id"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "address_patient_fk"))
     private Address address;
 
 

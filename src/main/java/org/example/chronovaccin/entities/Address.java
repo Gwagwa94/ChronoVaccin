@@ -1,4 +1,4 @@
-package org.example.chronovaccin.service;
+package org.example.chronovaccin.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

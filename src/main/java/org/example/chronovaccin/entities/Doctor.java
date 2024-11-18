@@ -1,26 +1,23 @@
-package org.example.chronovaccin.service;
+package org.example.chronovaccin.entities;
 
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "doctors")
 public class Doctor {
 
     @Id
+    @Column(name="id")
     private Integer id;
+
+    @Column(name="name")
     private String name;
 
     @OneToOne
     @JoinColumn(name = "address_id", foreignKey = @ForeignKey(name="address_docteur_fk"))
-    private Address workAt;
+    private Address address;
 
 
     @ManyToMany
@@ -37,6 +34,12 @@ public class Doctor {
     }
     public void setName(String name) {
         this.name = name;
+    }
+    public Address getAddress() {
+        return address;
+    }
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     
