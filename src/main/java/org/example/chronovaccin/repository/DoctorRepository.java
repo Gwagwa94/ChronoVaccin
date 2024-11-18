@@ -1,20 +1,20 @@
 package org.example.chronovaccin.repository;
 
-import java.util.List;
-
-import org.example.chronovaccin.entities.Patient;
+import org.example.chronovaccin.entities.Doctor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
-public interface PatientRepository extends JpaRepository<Patient, Integer> {
+public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
 
 //    List<Patient> findByfirstName(String firstName);
 
-    List<Patient> findByName(String name);
+    List<Doctor> findByName(String name);
     Long countByName(String firstName);
 
-    @Query("SELECT p FROM Patient p JOIN FETCH p.address")
-    List<Patient> findAllWithAddress();
+    @Query("SELECT d FROM Doctor d JOIN FETCH d.address")
+    List<Doctor> findAllWithAddress();
 }

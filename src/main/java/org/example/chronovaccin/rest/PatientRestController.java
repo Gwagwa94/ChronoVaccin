@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.example.chronovaccin.exception.PatientNotFoundException;
-import org.example.chronovaccin.service.Patient;
+import org.example.chronovaccin.entities.Patient;
 import org.example.chronovaccin.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

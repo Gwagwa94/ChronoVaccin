@@ -2,6 +2,7 @@ package org.example.chronovaccin.service;
 
 import java.util.List;
 
+import org.example.chronovaccin.entities.Patient;
 import org.example.chronovaccin.exception.PatientNotFoundException;
 import org.example.chronovaccin.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
