@@ -6,7 +6,7 @@ import org.example.chronovaccin.repository.CenterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CenterService {
@@ -14,8 +14,14 @@ public class CenterService {
     @Autowired
     private CenterRepository centerRepository;
 
-    public List<Center> findAll(String name) {
-        return centerRepository.findByName(name);
+    public List<Center> findAll(String name, String city) {
+        if (city != null) {
+            return centerRepository.findByCity(city);
+        } else if (name != null) {
+            return centerRepository.findByName(name);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public Center findOne(Integer id) throws CenterNotFoundException {

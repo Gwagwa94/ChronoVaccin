@@ -18,8 +18,11 @@ public class CenterRestController {
     private CenterService service;
 
     @GetMapping(path = "/centers")
-    public List<Center> findAll(@RequestParam(name = "name", required = false) String filterByName) {
-        return service.findAll(filterByName);
+    public List<Center> findAll(
+            @RequestParam(name = "name", required = false) String filterByName,
+            @RequestParam(name = "city", required = false) String filterByCity
+    ) {
+        return service.findAll(filterByName, filterByCity);
     }
 
     @GetMapping(path = "/center/{id}")

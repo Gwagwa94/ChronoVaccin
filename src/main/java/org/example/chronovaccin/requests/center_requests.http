@@ -2,6 +2,10 @@ GET http://localhost:8080/centers?name=Grand%20centre%20de%20vaccination
 
 ###
 
+GET http://localhost:8080/centers?city=Paris
+
+###
+
 DELETE http://localhost:8080/center/0
 
 ###
