@@ -5,23 +5,21 @@ import { Observable } from 'rxjs';
 export interface Medecin {
   id: number;
   nom: string;
-  centre: {
-    id: number;
-    nom: string;
-    ville: string;
-  };
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class MedecinService {
-  private apiUrl = 'http://localhost:8080/api/medecins'; // URL de votre API backend
+  private apiUrl = 'http://localhost:8080/api/medecins';
 
   constructor(private http: HttpClient) {}
 
   getMedecins(): Observable<Medecin[]> {
-    console.log("getMédecins: " + this.http.get<Medecin[]>(this.apiUrl));
     return this.http.get<Medecin[]>(this.apiUrl);
+  }
+
+  getMedecinsByCentre(centreId: number): Observable<Medecin[]> {
+    return this.http.get<Medecin[]>(`${this.apiUrl}?centreId=${centreId}`);
   }
 }

@@ -2,9 +2,7 @@ package com.example.vaccination.controller;
 
 import com.example.vaccination.model.Medecin;
 import com.example.vaccination.repository.MedecinRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +18,11 @@ public class MedecinController {
 
     @GetMapping
     public List<Medecin> getAllMedecins() {
-        return medecinRepository.findAll(); // Récupère tous les médecins
+        return medecinRepository.findAll();
+    }
+
+    @GetMapping("/centres/{centreId}")
+    public List<Medecin> getMedecinsByCentre(@PathVariable Long centreId) {
+        return medecinRepository.findByCentreId(centreId);
     }
 }

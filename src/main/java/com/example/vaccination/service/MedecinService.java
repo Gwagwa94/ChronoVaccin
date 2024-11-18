@@ -18,8 +18,14 @@ public class MedecinService {
         this.medecinRepository = medecinRepository;
     }
 
+    // Log tous les médecins
     public void logAllMedecins() {
         List<Medecin> medecins = medecinRepository.findAll();
-        logger.info("Médecins dans la base de données : {}");
+        logger.info("Médecins dans la base de données : {}", medecins);
+    }
+
+    // Obtenir les médecins par centre
+    public List<Medecin> getMedecinsByCentre(Long centreId) {
+        return medecinRepository.findByCentreId(centreId);
     }
 }
