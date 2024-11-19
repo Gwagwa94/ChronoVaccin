@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {Centre} from '../../../services/centre.service';
 
 @Component({
   selector: 'app-chips',
@@ -34,15 +35,26 @@ export class AppChipsComponent implements OnInit {
         });
   }
 
-  searchCentres(event: Event): void {
-    const inputElement = event.target as HTMLInputElement; // Conversion explicite
-    const query = inputElement?.value.trim().toLowerCase(); // Accéder à la valeur
-    if (query) {
-      this.filteredCentres = this.centres.filter((centre) =>
-          `${centre.nom} ${centre.ville}`.toLowerCase().includes(query)
-      );
-    } else {
-      this.filteredCentres = [...this.centres]; // Réinitialiser si la recherche est vide
-    }
+  searchCentres(query: string): void {
+    const lowerQuery = query.toLowerCase();
+    this.filteredCentres = this.centres.filter(
+        (centre) =>
+            centre.nom.toLowerCase().includes(lowerQuery) ||
+            centre.ville.toLowerCase().includes(lowerQuery) ||
+            centre.codePostal.includes(query) // Recherche par code postal
+    );
   }
+
+  searchByCodePostal(codePostal: string): void {
+    this.http.get<Centre[]>(`http://localhost:8080/api/centres/search?codePostal=${codePostal}`)
+        .subscribe((data: Centre[]) => {
+          this.centres = data;
+        });
+  }
+  onSearchInput(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    this.searchCentres(inputValue);
+  }
+
+
 }

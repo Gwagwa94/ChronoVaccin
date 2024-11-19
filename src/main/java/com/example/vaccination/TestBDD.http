@@ -11,5 +11,15 @@ GET http://localhost:8080/api/centres
 # curl -X GET http://localhost:8080/api/centres/1/medecins
 GET http://localhost:8080/api/centres/1/medecins
 
+
+###
+
+# curl -X GET http://localhost:8080/api/centres/code-postal/75001
+GET http://localhost:8080/api/centres/code-postal/75001
+
+###
+
+
+
 ###
 

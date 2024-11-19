@@ -25,6 +25,7 @@ public class CentreController {
         return centreService.getAllCentres();
     }
 
+
     @PostMapping
     public Centre createCentre(@RequestBody Centre centre) {
         return centreService.saveCentre(centre);
@@ -35,4 +36,13 @@ public class CentreController {
     public List<Medecin> getMedecinsByCentre(@PathVariable Long id) {
         return centreService.getMedecinsByCentre(id);
     }
+    @GetMapping("/search")
+    public List<Centre> searchByCodePostal(@RequestParam String codePostal) {
+        return centreService.findByCodePostal(codePostal);
+    }
+    @GetMapping("/code-postal/{codePostal}")
+    public List<Centre> getCentresByCodePostal(@PathVariable String codePostal) {
+        return centreService.findByCodePostal(codePostal);
+    }
 }
+

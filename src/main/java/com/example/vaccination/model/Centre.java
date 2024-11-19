@@ -1,7 +1,7 @@
 package com.example.vaccination.model;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.List;
 
 @Entity
@@ -12,21 +12,12 @@ public class Centre {
 
     private String nom;
     private String ville;
+    private String codePostal; // Nouveau champ
 
-    @OneToMany(mappedBy = "centre", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "centre")
     private List<Medecin> medecins;
 
-    // Getter et setter pour 'medecins'
-    public List<Medecin> getMedecins() {
-        return medecins;
-    }
-
-    public void setMedecins(List<Medecin> medecins) {
-        this.medecins = medecins;
-    }
-
-    // Autres getters et setters
+    // Getters et Setters
     public Long getId() {
         return id;
     }
@@ -49,5 +40,21 @@ public class Centre {
 
     public void setVille(String ville) {
         this.ville = ville;
+    }
+
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
+
+    public List<Medecin> getMedecins() {
+        return medecins;
+    }
+
+    public void setMedecins(List<Medecin> medecins) {
+        this.medecins = medecins;
     }
 }
