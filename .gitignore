@@ -38,3 +38,5 @@ out/
 
 ### Angular ###
 .angular/
+# Ignore Angular cache
+vaccination-frontend/.angular/cache/
