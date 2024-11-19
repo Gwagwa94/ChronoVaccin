@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### Angular ###
-.angular/cache
+.angular/
