@@ -40,3 +40,7 @@ out/
 .angular/
 # Ignore Angular cache
 vaccination-frontend/.angular/cache/
+
+package-lock.json
+
+vaccination-frontend/node_modules
