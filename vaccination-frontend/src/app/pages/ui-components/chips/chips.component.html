@@ -3,10 +3,18 @@
         <mat-card-title class="m-b-0">Centres</mat-card-title>
     </mat-card-header>
     <mat-card-content class="b-t-1">
-        <ng-container *ngIf="centres.length > 0; else noCentres">
+        <!-- Champ de recherche -->
+        <input
+                matInput
+                (input)="searchCentres($event)"
+                placeholder="Rechercher un centre par nom ou ville"
+        />
+
+        <!-- Liste de centres -->
+        <ng-container *ngIf="filteredCentres.length > 0; else noCentres">
             <mat-chip-listbox aria-label="Centres">
                 <mat-chip
-                        *ngFor="let centre of centres"
+                        *ngFor="let centre of filteredCentres"
                         class="f-s-14"
                         color="primary"
                         (click)="loadMedecins(centre.id)"
@@ -15,6 +23,8 @@
                 </mat-chip>
             </mat-chip-listbox>
         </ng-container>
+
+        <!-- Aucun centre trouvé -->
         <ng-template #noCentres>
             <p>Aucun centre trouvé.</p>
         </ng-template>
