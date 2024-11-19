@@ -38,7 +38,7 @@ export const navItems: NavItem[] = [
     route: '/ui-components/tooltips',
   },
   {
-    navCap: 'Profile',
+    navCap: 'Profil',
   },
   {
     displayName: 'Connexion',
