@@ -2,23 +2,23 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
   {
-    navCap: 'Home',
+    navCap: 'Général',
   },
   {
-    displayName: 'Dashboard',
+    displayName: 'Accueil',
     iconName: 'layout-dashboard',
     route: '/dashboard',
   },
   {
-    navCap: 'Ui Components',
+    navCap: 'Recherche',
   },
   {
-    displayName: 'Badge',
+    displayName: 'Médecin',
     iconName: 'rosette',
     route: '/ui-components/badge',
   },
   {
-    displayName: 'Chips',
+    displayName: 'Centre',
     iconName: 'poker-chip',
     route: '/ui-components/chips',
   },
@@ -38,15 +38,15 @@ export const navItems: NavItem[] = [
     route: '/ui-components/tooltips',
   },
   {
-    navCap: 'Auth',
+    navCap: 'Profile',
   },
   {
-    displayName: 'Login',
+    displayName: 'Connexion',
     iconName: 'lock',
     route: '/authentication/login',
   },
   {
-    displayName: 'Register',
+    displayName: 'Inscription',
     iconName: 'user-plus',
     route: '/authentication/register',
   },
