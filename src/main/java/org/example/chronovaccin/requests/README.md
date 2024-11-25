@@ -47,6 +47,19 @@ POST http://localhost:8080/patients
 Content-Type: application/json  
 {
 "id": 3,
+"firstname": "Patrick",
+"lastname": "Duval",
+"birthDate": "2005-09-04T00:00:00.000+00:00",
+"address": {
+"city": "Nancy",
+"street": "24 rue Jeanne d'Arc",
+"postalCode": "54000"
+}
+}  
+POST http://localhost:8080/patients  
+Content-Type: application/json  
+{
+"id": 3,
 "name": "Jean",
 "birthDate": "2020-10-07T00:00:01.084+00:00"
 }  
