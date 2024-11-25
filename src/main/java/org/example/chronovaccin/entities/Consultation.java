@@ -1,6 +1,5 @@
 package org.example.chronovaccin.entities;
 
-import com.example.vaccination.model.Centre;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -20,7 +19,7 @@ public class Consultation {
     private Patient patient;
     @OneToOne
     @JoinColumn(name="centre_id", foreignKey = @ForeignKey(name="consultations_centre_id_fkey"))
-    private Centre centre;
+    private Center centre;
     @Column(name="date")
     private Date date;
     @Column(name="heure")
@@ -46,10 +45,10 @@ public class Consultation {
     public Patient getPatient() {
         return patient;
     }
-    public void setCentre(Centre centre) {
+    public void setCentre(Center centre) {
         this.centre = centre;
     }
-    public Centre getCentre() {
+    public Center getCentre() {
         return centre;
     }
     public void setDate(Date date) {

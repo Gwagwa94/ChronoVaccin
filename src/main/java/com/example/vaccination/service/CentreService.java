@@ -2,23 +2,11 @@ package com.example.vaccination.service;
 
 import com.example.vaccination.model.Centre;
 import com.example.vaccination.repository.CentreRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import com.example.vaccination.model.Medecin;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-import com.example.vaccination.model.Centre;
-import com.example.vaccination.model.Medecin;
-import com.example.vaccination.repository.CentreRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CentreService {

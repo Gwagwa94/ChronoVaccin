@@ -1,6 +1,5 @@
 package org.example.chronovaccin.entities;
 
-import com.example.vaccination.model.Centre;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,7 +16,7 @@ public class Doctor {
     private String lastname;
     @OneToOne
     @JoinColumn(name="centre_id", foreignKey = @ForeignKey(name="medecins_centre_id_fkey"))
-    private Centre centre;
+    private Center centre;
     @OneToOne
     @JoinColumn(name = "adresse_id", foreignKey = @ForeignKey(name="medecins_adresse_id_fkey"))
     private Address address;

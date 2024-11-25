@@ -13,11 +13,11 @@ import java.util.Optional;
 public interface CenterRepository extends JpaRepository<Center, Integer> {
 
     List<Center> findByName(String name);
-    Optional<Center> findById(Integer id);
+//    Optional<Center> findById(Integer id);
 
     @Query("SELECT c FROM Center c JOIN FETCH c.id")
     List<Center> findAllWithId();
 
-    @Query("SELECT c FROM Center c JOIN Address a ON a.id = c.addressId WHERE a.city = :city")
+    @Query("SELECT c FROM Center c JOIN Address a ON a.id = c.address.id WHERE a.city = :city")
     List<Center> findByCity(@Param("city") String city);
 }

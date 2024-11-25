@@ -28,11 +28,11 @@ public class Center {
     public void setName(String name) {
         this.name = name;
     }
-    public Integer getAddressId() {
-        return address.getId();
+    public Address getAddress() {
+        return this.address;
     }
-    public void setAddressId(Integer addressId) {
-        this.address.setId(addressId);
+    public void setAddress(Address address) {
+        this.address = address;
     }
     public String getPhone() {
         return phone;
