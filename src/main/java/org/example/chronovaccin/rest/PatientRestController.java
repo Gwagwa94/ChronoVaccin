@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import org.example.chronovaccin.entities.Address;
 import org.example.chronovaccin.exception.PatientNotFoundException;
 import org.example.chronovaccin.entities.Patient;
 import org.example.chronovaccin.service.PatientService;
