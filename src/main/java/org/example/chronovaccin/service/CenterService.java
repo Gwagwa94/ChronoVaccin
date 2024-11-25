@@ -20,7 +20,7 @@ public class CenterService {
         } else if (name != null) {
             return centerRepository.findByName(name);
         } else {
-            return Collections.emptyList();
+            return centerRepository.findAll();
         }
     }
 

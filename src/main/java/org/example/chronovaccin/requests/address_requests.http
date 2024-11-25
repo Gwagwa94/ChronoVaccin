@@ -2,6 +2,10 @@ GET http://localhost:8080/addresses?city=Paris
 
 ###
 
+GET http://localhost:8080/address/1
+
+###
+
 DELETE http://localhost:8080/address/0
 
 ###

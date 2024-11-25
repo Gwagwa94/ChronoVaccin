@@ -16,5 +16,9 @@ Content-Type: application/json
 {
   "id": 0,
   "name": "Grand centre de vaccination",
-  "addressId": 4
+  "address": {
+    "city": "Paris",
+    "postalCode": "75015",
+    "street": "14 rue du Grand Centre"
+  }
 }
