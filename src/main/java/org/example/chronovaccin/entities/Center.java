@@ -1,22 +1,20 @@
 package org.example.chronovaccin.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="centers")
+@Table(name="centres")
 public class Center {
     @Id
     @Column(name="id")
     private Integer id;
-
-    @Column(name="name")
+    @Column(name="nom")
     private String name;
-
-    @Column(name="address_id")
-    private Integer addressId;
+    @OneToOne
+    @JoinColumn(name="adresse_id", foreignKey = @ForeignKey(name="centres_adresse_id_fkey"))
+    private Address address;
+    @Column(name="telephone")
+    private String phone;
 
     public Integer getId() {
         return id;
@@ -30,10 +28,16 @@ public class Center {
     public void setName(String name) {
         this.name = name;
     }
-    public Integer getAddressId() {
-        return addressId;
+    public Address getAddress() {
+        return this.address;
     }
-    public void setAddressId(Integer addressId) {
-        this.addressId = addressId;
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

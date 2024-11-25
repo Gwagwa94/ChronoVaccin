@@ -12,8 +12,8 @@ public interface DoctorRepository extends JpaRepository<Doctor, Integer> {
 
 //    List<Patient> findByfirstName(String firstName);
 
-    List<Doctor> findByName(String name);
-    Long countByName(String firstName);
+    List<Doctor> findByLastname(String name);
+    Long countByLastname(String firstName);
 
     @Query("SELECT d FROM Doctor d JOIN FETCH d.address")
     List<Doctor> findAllWithAddress();

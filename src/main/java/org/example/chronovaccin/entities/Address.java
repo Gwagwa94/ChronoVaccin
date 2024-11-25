@@ -6,16 +6,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="addresses")
+@Table(name="adresses")
 public class Address {
 
     @Id
+    @Column(name="id")
     private Integer id;
-
-    @Column(name="street")
+    @Column(name="ligne1")
     private String street;
-    @Column(name="city")
+    @Column(name="ville")
     private String city;
+    @Column(name="code_postal")
+    private String postalCode;
+    @Column(name="type")
+    private String type;
 
     public Address(){
 
@@ -43,6 +47,19 @@ public class Address {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
     }
 
     

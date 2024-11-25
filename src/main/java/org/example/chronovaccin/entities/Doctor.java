@@ -1,27 +1,29 @@
 package org.example.chronovaccin.entities;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "doctors")
+@Table(name = "medecins")
 public class Doctor {
 
     @Id
     @Column(name="id")
     private Integer id;
 
-    @Column(name="name")
-    private String name;
-
+    @Column(name="prenom")
+    private String firstname;
+    @Column(name="nom")
+    private String lastname;
     @OneToOne
-    @JoinColumn(name = "address_id", foreignKey = @ForeignKey(name="address_docteur_fk"))
+    @JoinColumn(name="centre_id", foreignKey = @ForeignKey(name="medecins_centre_id_fkey"))
+    private Center centre;
+    @OneToOne
+    @JoinColumn(name = "adresse_id", foreignKey = @ForeignKey(name="medecins_adresse_id_fkey"))
     private Address address;
+    @OneToOne
+    @JoinColumn(name="specialite_id", foreignKey = @ForeignKey(name="medecins_specialite_id_fkey"))
+    private Specialty specialty;
 
-
-    @ManyToMany
-    private List<Patient> patientele;
 
     public Integer getId() {
         return id;
@@ -29,11 +31,11 @@ public class Doctor {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
+    public String getLastname() {
+        return lastname;
     }
-    public void setName(String name) {
-        this.name = name;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
     public Address getAddress() {
         return address;

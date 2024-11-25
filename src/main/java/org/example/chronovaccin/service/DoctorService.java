@@ -15,7 +15,7 @@ public class DoctorService {
     private DoctorRepository doctorRepository;
 
     public List<Doctor> findAll(String name) {
-        return doctorRepository.findByName(name);
+        return doctorRepository.findByLastname(name);
     }
 
     public Doctor findOne(Integer id) throws DoctorNotFoundException {
