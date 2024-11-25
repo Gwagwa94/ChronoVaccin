@@ -9,6 +9,7 @@ import java.sql.Date;
 public class Consultation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private Integer id;
     @OneToOne

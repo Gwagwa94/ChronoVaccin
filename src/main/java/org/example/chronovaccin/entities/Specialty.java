@@ -9,6 +9,7 @@ import java.util.Date;
 public class Specialty {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private Integer id;
     @Column(name="nom")

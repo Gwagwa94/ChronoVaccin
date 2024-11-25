@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 public class Patient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private Integer id;
     @Column(name="prenom")
@@ -17,8 +18,8 @@ public class Patient {
     private String lastname;
     @Column(name="date_de_naissance")
     private Date birthDate;
-    @OneToOne
-    @JoinColumn(name="adresse_id", foreignKey = @ForeignKey(name = "patients_adresse_id_fkey"))
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="adresse_id", foreignKey = @ForeignKey(name = "patients_adresse_id_fkey"), referencedColumnName = "id")
     private Address address;
     @OneToOne
     @JoinColumn(name="medecin_id", foreignKey = @ForeignKey(name = "patients_medecin_id_fkey"))
