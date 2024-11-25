@@ -8,6 +8,7 @@ import { MedecinService, Medecin } from '../../../services/medecin.service';
 export class AppBadgeComponent implements OnInit {
   medecins: Medecin[] = [];
   filteredMedecins: Medecin[] = [];
+  hidden = false;
 
   constructor(private medecinService: MedecinService) {}
 
@@ -18,20 +19,23 @@ export class AppBadgeComponent implements OnInit {
   loadMedecins() {
     this.medecinService.getMedecins().subscribe((data) => {
       this.medecins = data;
-      this.filteredMedecins = data; // Initialisation pour afficher tous les médecins
+      this.filteredMedecins = data; // Affiche tous les médecins par défaut
     });
   }
 
   searchMedecins(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    const query = inputElement.value.trim().toLowerCase();
+    const query = inputElement?.value.trim().toLowerCase();
     if (query) {
-      this.filteredMedecins = this.medecins.filter(
-          (medecin) =>
-              `${medecin.firstname} ${medecin.lastname}`.toLowerCase().includes(query)
-      );
+      this.medecinService.searchMedecinsByName(query).subscribe((data) => {
+        this.filteredMedecins = data;
+      });
     } else {
-      this.filteredMedecins = [...this.medecins];
+      this.filteredMedecins = [...this.medecins]; // Réinitialiser si la recherche est vide
     }
+  }
+
+  toggleBadgeVisibility() {
+    this.hidden = !this.hidden;
   }
 }
