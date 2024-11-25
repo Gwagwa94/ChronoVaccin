@@ -4,14 +4,16 @@ import { Observable } from 'rxjs';
 
 export interface Medecin {
   id: number;
-  nom: string;
+  firstname: string;
+  lastname: string;
+  speciality: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class MedecinService {
-  private apiUrl = 'http://localhost:8080/api/medecins';
+  private apiUrl = 'http://localhost:8080/api/doctors';
 
   constructor(private http: HttpClient) {}
 
