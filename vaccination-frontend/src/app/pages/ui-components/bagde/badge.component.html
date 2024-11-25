@@ -8,7 +8,7 @@
             <input
                     matInput
                     (input)="searchMedecins($event)"
-                    placeholder="Entrez un nom"
+                    placeholder="Entrez un prénom ou un nom"
             />
         </mat-form-field>
 
@@ -16,7 +16,9 @@
             <mat-card *ngFor="let medecin of filteredMedecins" class="b-1 shadow-none">
                 <mat-card-content>
                     <p>
-                        <span class="f-w-500 text-muted">{{ medecin.name }}</span>
+            <span class="f-w-500 text-muted">
+              {{ medecin.firstname }} {{ medecin.lastname }}
+            </span>
                     </p>
                 </mat-card-content>
             </mat-card>
