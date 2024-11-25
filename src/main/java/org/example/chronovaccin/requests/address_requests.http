@@ -1,0 +1,17 @@
+GET http://localhost:8080/addresses?city=Paris
+
+###
+
+DELETE http://localhost:8080/address/0
+
+###
+
+POST http://localhost:8080/addresses
+Content-Type: application/json
+
+{
+  "id": 4,
+  "city": "Paris",
+  "street": "12 rue de Montcuq",
+  "postalCode": "75000"
+}
