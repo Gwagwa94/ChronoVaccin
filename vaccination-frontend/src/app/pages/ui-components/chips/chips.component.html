@@ -3,17 +3,15 @@
         <mat-card-title class="m-b-0">Centres</mat-card-title>
     </mat-card-header>
     <mat-card-content class="b-t-1">
-        <!-- Barre de recherche -->
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>Rechercher un centre</mat-label>
             <input
                     matInput
                     (input)="onSearchInput($event)"
-                    placeholder="Nom, ville ou code postal"
+                    placeholder="Nom ou ville"
             />
         </mat-form-field>
 
-        <!-- Liste de centres -->
         <ng-container *ngIf="filteredCentres.length > 0; else noCentres">
             <mat-chip-listbox aria-label="Centres">
                 <mat-chip
@@ -22,7 +20,7 @@
                         color="primary"
                         (click)="loadMedecins(centre.id)"
                 >
-                    {{ centre.name }} - {{ centre.address.city }} ({{ centre.address.postalCode }})
+                    {{ centre.name }} - {{ centre.address?.city }} ({{ centre.address?.postalCode }})
                 </mat-chip>
             </mat-chip-listbox>
         </ng-container>
@@ -32,7 +30,6 @@
     </mat-card-content>
 </mat-card>
 
-<!-- Médecins associés -->
 <mat-card *ngIf="medecins.length > 0" class="cardWithShadow theme-card">
     <mat-card-header>
         <mat-card-title class="m-b-0">Médecins du Centre Sélectionné</mat-card-title>
@@ -40,13 +37,12 @@
     <mat-card-content class="b-t-1">
         <mat-list>
             <mat-list-item *ngFor="let medecin of medecins">
-                {{ medecin.firstname }} {{ medecin.lastname }}
+                {{ medecin.name }}
             </mat-list-item>
         </mat-list>
     </mat-card-content>
 </mat-card>
 
-<!-- Message si aucun médecin -->
 <p *ngIf="selectedCentreId && medecins.length === 0">
     Aucun médecin trouvé pour ce centre.
 </p>
