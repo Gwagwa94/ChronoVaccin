@@ -22,7 +22,7 @@
                         color="primary"
                         (click)="loadMedecins(centre.id)"
                 >
-                    {{ centre.nom }} - {{ centre.ville }} ({{ centre.codePostal }})
+                    {{ centre.name }} - {{ centre.address.city }} ({{ centre.address.postalCode }})
                 </mat-chip>
             </mat-chip-listbox>
         </ng-container>
@@ -40,7 +40,7 @@
     <mat-card-content class="b-t-1">
         <mat-list>
             <mat-list-item *ngFor="let medecin of medecins">
-                {{ medecin.nom }}
+                {{ medecin.firstname }} {{ medecin.lastname }}
             </mat-list-item>
         </mat-list>
     </mat-card-content>

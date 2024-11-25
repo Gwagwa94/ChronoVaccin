@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Centre} from '../../../services/centre.service';
+import { Centre } from '../../../services/centre.service';
+import { Medecin } from '../../../services/medecin.service';
 
 @Component({
   selector: 'app-chips',
@@ -8,9 +9,9 @@ import {Centre} from '../../../services/centre.service';
   styleUrls: ['./chips.component.scss'],
 })
 export class AppChipsComponent implements OnInit {
-  centres: any[] = [];
-  filteredCentres: any[] = [];
-  medecins: any[] = [];
+  centres: Centre[] = [];
+  filteredCentres: Centre[] = [];
+  medecins: Medecin[] = [];
   selectedCentreId: number | null = null;
 
   constructor(private http: HttpClient) {}
@@ -20,17 +21,17 @@ export class AppChipsComponent implements OnInit {
   }
 
   loadCentres() {
-    this.http.get('http://localhost:8080/api/centres').subscribe((data: any) => {
+    this.http.get<Centre[]>('http://localhost:8080/api/centers').subscribe((data) => {
       this.centres = data;
-      this.filteredCentres = [...data]; // Initialiser les centres filtrés
+      this.filteredCentres = [...data];
     });
   }
 
   loadMedecins(centreId: number) {
     this.selectedCentreId = centreId;
     this.http
-        .get(`http://localhost:8080/api/medecins/centres/${centreId}`)
-        .subscribe((data: any) => {
+        .get<Medecin[]>(`http://localhost:8080/api/doctors?centreId=${centreId}`)
+        .subscribe((data) => {
           this.medecins = data;
         });
   }
@@ -39,22 +40,14 @@ export class AppChipsComponent implements OnInit {
     const lowerQuery = query.toLowerCase();
     this.filteredCentres = this.centres.filter(
         (centre) =>
-            centre.nom.toLowerCase().includes(lowerQuery) ||
-            centre.ville.toLowerCase().includes(lowerQuery) ||
-            centre.codePostal.includes(query) // Recherche par code postal
+            centre.name.toLowerCase().includes(lowerQuery) ||
+            centre.address.city.toLowerCase().includes(lowerQuery) ||
+            centre.address.postalCode.includes(query)
     );
   }
 
-  searchByCodePostal(codePostal: string): void {
-    this.http.get<Centre[]>(`http://localhost:8080/api/centres/search?codePostal=${codePostal}`)
-        .subscribe((data: Centre[]) => {
-          this.centres = data;
-        });
-  }
   onSearchInput(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
     this.searchCentres(inputValue);
   }
-
-
 }
