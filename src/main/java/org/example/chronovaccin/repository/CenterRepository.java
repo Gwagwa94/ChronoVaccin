@@ -20,4 +20,7 @@ public interface CenterRepository extends JpaRepository<Center, Integer> {
 
     @Query("SELECT c FROM Center c JOIN Address a ON a.id = c.address.id WHERE a.city = :city")
     List<Center> findByCity(@Param("city") String city);
+
+    @Query("SELECT c FROM Center c JOIN Address a ON a.id = c.address.id WHERE a.postalCode = :postalCode")
+    List<Center> findByPostalCode(@Param("postalCode") String postalCode);
 }

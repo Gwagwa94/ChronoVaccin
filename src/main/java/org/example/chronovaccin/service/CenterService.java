@@ -14,11 +14,13 @@ public class CenterService {
     @Autowired
     private CenterRepository centerRepository;
 
-    public List<Center> findAll(String name, String city) {
+    public List<Center> findAll(String name, String city, String postalCode) {
         if (city != null) {
             return centerRepository.findByCity(city);
         } else if (name != null) {
             return centerRepository.findByName(name);
+        } else if (postalCode != null) {
+            return centerRepository.findByPostalCode(postalCode);
         } else {
             return centerRepository.findAll();
         }
