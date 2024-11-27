@@ -2,11 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface Address {
+    street: string;
+    city: string;
+    postalCode: string;
+}
+
 export interface Centre {
     id: number;
     name: string;
-    addressId: number;
-    city?: string; // Ajouté si une ville est récupérable directement
+    address: Address | null; // L'adresse peut être null si non définie
+    phone: string | null;
 }
 
 @Injectable({
@@ -19,13 +25,5 @@ export class CentreService {
 
     getCentres(): Observable<Centre[]> {
         return this.http.get<Centre[]>(this.apiUrl);
-    }
-
-    searchCentresByCity(city: string): Observable<Centre[]> {
-        return this.http.get<Centre[]>(`${this.apiUrl}?city=${city}`);
-    }
-
-    searchCentresByName(name: string): Observable<Centre[]> {
-        return this.http.get<Centre[]>(`${this.apiUrl}?name=${name}`);
     }
 }

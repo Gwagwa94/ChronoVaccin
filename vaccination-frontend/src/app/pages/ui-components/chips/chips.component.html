@@ -14,19 +14,27 @@
         </mat-form-field>
 
         <!-- Liste des centres -->
-        <ng-container *ngIf="filteredCentres.length > 0; else noCentres">
-            <mat-chip-listbox aria-label="Centres">
-                <mat-chip *ngFor="let centre of filteredCentres" class="f-s-14" color="primary">
-                    {{ centre.name }} -
-                    <span *ngIf="centre.address; else noAddress">
-        {{ centre.address.city }}
-      </span>
-                    <ng-template #noAddress>
-                        <em>Adresse non disponible</em>
-                    </ng-template>
-                </mat-chip>
-            </mat-chip-listbox>
-        </ng-container>
+        <div class="row">
+            <div
+                    class="col-sm-6 col-lg-3"
+                    *ngFor="let centre of filteredCentres"
+            >
+                <mat-card class="cardWithShadow productcard overflow-hidden">
+                    <mat-card-content class="p-b-24 p-t-12 position-relative">
+                        <mat-card-title class="mat-headline-2 f-s-16 m-b-4">
+                            {{ centre.name }}
+                        </mat-card-title>
+                        <p *ngIf="centre.address">
+                            {{ centre.address.street }}, {{ centre.address.city }}
+                            ({{ centre.address.postalCode }})
+                        </p>
+                        <p *ngIf="!centre.address">
+                            <em>Adresse non disponible</em>
+                        </p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
         <ng-template #noCentres>
             <p>Aucun centre trouvé.</p>
         </ng-template>
