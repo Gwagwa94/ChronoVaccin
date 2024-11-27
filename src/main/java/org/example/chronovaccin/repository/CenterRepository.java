@@ -14,6 +14,7 @@ public interface CenterRepository extends JpaRepository<Center, Integer> {
 
     List<Center> findByName(String name);
 //    Optional<Center> findById(Integer id);
+    List<Center> findByAddressPostalCode(String postalCode);
 
     @Query("SELECT c FROM Center c JOIN FETCH c.id")
     List<Center> findAllWithId();

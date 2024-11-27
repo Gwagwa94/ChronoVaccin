@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CentreService, Centre } from '../../../services/centre.service';
+import { HttpClient } from '@angular/common/http'; // Assurez-vous de bien importer HttpClient
+import { Centre } from '../../../services/centre.service';
 
 @Component({
     selector: 'app-chips',
@@ -10,14 +11,14 @@ export class AppChipsComponent implements OnInit {
     centres: Centre[] = [];
     filteredCentres: Centre[] = [];
 
-    constructor(private centreService: CentreService) {}
+    constructor(private http: HttpClient) {} // Injecter HttpClient correctement
 
     ngOnInit(): void {
         this.loadCentres();
     }
 
     loadCentres(): void {
-        this.centreService.getCentres().subscribe(
+        this.http.get<Centre[]>('http://localhost:8080/centers').subscribe(
             (data) => {
                 this.centres = data;
                 this.filteredCentres = [...this.centres];
@@ -30,8 +31,10 @@ export class AppChipsComponent implements OnInit {
 
     onSearchInput(event: Event): void {
         const inputValue = (event.target as HTMLInputElement).value.toLowerCase();
-        this.filteredCentres = this.centres.filter((centre) =>
-            centre.name.toLowerCase().includes(inputValue)
+        this.filteredCentres = this.centres.filter(
+            (centre) =>
+                centre.name.toLowerCase().includes(inputValue) ||
+                (centre.address && centre.address.postalCode.includes(inputValue))
         );
     }
 }

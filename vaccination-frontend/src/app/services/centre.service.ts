@@ -26,4 +26,7 @@ export class CentreService {
     getCentres(): Observable<Centre[]> {
         return this.http.get<Centre[]>(this.apiUrl);
     }
+    searchCentresByPostalCode(postalCode: string): Observable<Centre[]> {
+        return this.http.get<Centre[]>(`${this.apiUrl}?postalCode=${postalCode}`);
+    }
 }
