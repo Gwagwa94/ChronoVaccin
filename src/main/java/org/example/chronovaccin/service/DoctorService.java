@@ -15,6 +15,9 @@ public class DoctorService {
     private DoctorRepository doctorRepository;
 
     public List<Doctor> findAll(String name) {
+        if (name == null || name.isEmpty()) {
+            return doctorRepository.findAll();
+        }
         return doctorRepository.findByLastname(name);
     }
 

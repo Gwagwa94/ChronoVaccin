@@ -2,6 +2,10 @@ GET http://localhost:8080/centers?name=Grand%20centre%20de%20vaccination
 
 ###
 
+GET http://localhost:8080/centers
+
+###
+
 GET http://localhost:8080/centers?city=Paris
 
 ###
@@ -14,7 +18,6 @@ POST http://localhost:8080/centers
 Content-Type: application/json
 
 {
-  "id": 0,
   "name": "Grand centre de vaccination",
   "address": {
     "city": "Paris",

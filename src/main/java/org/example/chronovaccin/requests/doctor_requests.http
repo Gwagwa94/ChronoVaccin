@@ -1,4 +1,4 @@
-GET http://localhost:8080/doctors?name=Mario
+GET http://localhost:8080/doctors
 
 ###
 
@@ -10,9 +10,11 @@ POST http://localhost:8080/doctors
 Content-Type: application/json
 
 {
-  "id": 1,
-  "name": "Gregory House",
+  "firstname": "Gregory",
+  "lastname": "House",
   "address": {
-    "id": 3
+    "street": "14 rue du Four",
+    "city": "Deauville",
+    "postalCode": "14800"
   }
 }
