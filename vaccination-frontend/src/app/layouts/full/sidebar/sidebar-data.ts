@@ -13,7 +13,7 @@ export const navItems: NavItem[] = [
     navCap: 'Recherche',
   },
   {
-    displayName: 'Médecin',
+    displayName: 'Mon Espace',
     iconName: 'rosette',
     route: '/ui-components/badge',
   },
