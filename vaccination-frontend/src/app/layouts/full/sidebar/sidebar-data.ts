@@ -14,12 +14,12 @@ export const navItems: NavItem[] = [
   },
   {
     displayName: 'Mon Espace',
-    iconName: 'rosette',
+    iconName: 'accessible',
     route: '/ui-components/badge',
   },
   {
     displayName: 'Centre',
-    iconName: 'poker-chip',
+    iconName: 'home',
     route: '/ui-components/chips',
   },
   {

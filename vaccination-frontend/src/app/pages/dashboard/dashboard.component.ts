@@ -1,95 +1,49 @@
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
-import {
-  ApexChart,
-  ChartComponent,
-  ApexDataLabels,
-  ApexLegend,
-  ApexStroke,
-  ApexTooltip,
-  ApexAxisChartSeries,
-  ApexXAxis,
-  ApexYAxis,
-  ApexGrid,
-  ApexPlotOptions,
-  ApexFill,
-  ApexMarkers,
-  ApexResponsive,
-} from 'ng-apexcharts';
-
-interface stats {
-  id: number;
-  time: string;
-  color: string;
-  subtext?: string;
-  title?: string;
-  link?: string;
-}
-
-export interface productsData {
-  id: number;
-  uname: string;
-  position: string;
-  productName: string;
-  date: string;
-  priority: string;
-  hour: string;
-}
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./dashboard.component.scss'],
 })
-export class AppDashboardComponent {
-  @ViewChild('chart') chart: ChartComponent = Object.create(null);
+export class AppDashboardComponent implements OnInit {
+  appointmentForm: FormGroup;
+  centers = [
+    { id: 1, name: 'Centre Médical Paris' },
+    { id: 2, name: 'Centre Médical Lyon' },
+  ];
+  doctors: { id: number; name: string; speciality: string; centerId: number }[] = [
+    { id: 1, name: 'Jean Dupont', speciality: 'Cardiologie', centerId: 1 },
+    { id: 2, name: 'Marie Curie', speciality: 'Neurologie', centerId: 2 },
+  ];
+  filteredDoctors: { id: number; name: string; speciality: string; centerId: number }[] = [];
 
-  displayedColumns: string[] = ['assigned', 'name', 'priority', 'date', 'hour'];
-  dataSource: productsData[] = [];
-  stats: stats[] = [];
+  constructor(private fb: FormBuilder) {
+    this.appointmentForm = this.fb.group({
+      center: ['', Validators.required],
+      doctor: ['', Validators.required],
+      date: ['', Validators.required],
+    });
+  }
 
-  constructor() {
-    // Charger les données récentes des transactions depuis la base
-    this.stats = [
-      {
-        id: 1,
-        time: '09:00 am',
-        color: 'primary',
-        subtext: 'Consultation confirmée avec Dr. Martin.',
-      },
-      {
-        id: 2,
-        time: '10:30 am',
-        color: 'accent',
-        subtext: 'Consultation annulée avec Dr. Durand.',
-      },
-      {
-        id: 3,
-        time: '12:00 pm',
-        color: 'success',
-        subtext: 'Nouvelle consultation ajoutée avec Dr. Dupont.',
-      },
-    ];
+  ngOnInit(): void {
+    this.appointmentForm.get('center')?.valueChanges.subscribe((centerId) => {
+      this.filteredDoctors = this.doctors.filter((doctor) => doctor.centerId === centerId);
+      this.appointmentForm.get('doctor')?.setValue('');
+    });
+  }
 
-    // Charger les données des médecins en tant que "Top Projects"
-    this.dataSource = [
-      {
-        id: 1,
-        uname: 'Jean Dupont',
-        position: 'Cardiologie',
-        productName: 'Centre Médical Paris',
-        date: '27/01/25',
-        priority: 'critical',
-        hour: '10h00',
-      },
-      {
-        id: 2,
-        uname: 'Marie Curie',
-        position: 'Neurologie',
-        productName: 'Centre Médical Lyon',
-        date: '30/01/25', // Exemple de budget
-        priority: 'high',
-        hour: '16h30',
-      },
-    ];
+  onSubmit(): void {
+    if (this.appointmentForm.valid) {
+      const appointmentData = this.appointmentForm.value;
+      console.log('Rendez-vous pris avec succès :', appointmentData);
+      alert(
+          `Rendez-vous pris avec succès au ${this.centers.find(
+              (c) => c.id === appointmentData.center
+          )?.name} avec le Dr. ${
+              this.doctors.find((d) => d.id === appointmentData.doctor)?.name
+          } le ${appointmentData.date}`
+      );
+    }
   }
 }
