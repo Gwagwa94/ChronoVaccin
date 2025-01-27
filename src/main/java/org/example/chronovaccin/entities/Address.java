@@ -16,8 +16,6 @@ public class Address {
     private String city;
     @Column(name="code_postal")
     private String postalCode;
-    @Column(name="type")
-    private String type;
 
     public Address(){
 
@@ -52,12 +50,6 @@ public class Address {
     }
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
-    }
-    public String getType() {
-        return type;
-    }
-    public void setType(String type) {
-        this.type = type;
     }
 
     

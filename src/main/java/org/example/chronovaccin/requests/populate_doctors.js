@@ -30,8 +30,8 @@ async function createDoctor() {
         'Content-Type': 'application/json'
       }
     });
-    console.log(response.ok)
-    if (response.ok) {
+    console.log(response.status)
+    if (response.status === 201) {
       console.log('Médecin créé avec succès !');
     } else {
       console.error('Erreur lors de la création du médecin:', response.status);
