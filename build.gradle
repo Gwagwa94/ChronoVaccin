@@ -22,13 +22,19 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.jsoup:jsoup:1.15.3'
 
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
     runtimeOnly 'org.postgresql:postgresql'
 
     implementation 'org.springframework.boot:spring-boot-starter'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // PostgreSQL JDBC Driver
-    runtimeOnly 'org.postgresql:postgresql'
+    runtimeOnly 'org.postgresql:postgresql:42.7.3'
+    // PostgreSQL Socket Factory
+//    runtimeOnly 'com.google.cloud.sql:postgres-socket-factory'
 
     // Test dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

@@ -3,7 +3,7 @@ package org.example.chronovaccin.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "medecins")
+@Table(name="medecins")
 public class Doctor {
 
     @Id

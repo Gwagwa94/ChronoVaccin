@@ -24,6 +24,7 @@ public class DoctorRestController {
 
     @GetMapping(path = "/doctor/{id}")
     public Doctor findOne(@PathVariable("id") Integer id) throws DoctorNotFoundException {
+        System.out.println("GET: Find doctor with id: " + id);
         return service.findOne(id);
     }
 
