@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class AppDashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   appointmentForm: FormGroup;
   centers = [
     { id: 1, name: 'Centre Médical Paris' },
@@ -20,9 +21,9 @@ export class AppDashboardComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.appointmentForm = this.fb.group({
-      center: ['', Validators.required],
-      doctor: ['', Validators.required],
-      date: ['', Validators.required],
+      center: [''],
+      doctor: [''],
+      date: [''],
     });
   }
 
