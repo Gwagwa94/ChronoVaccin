@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,13 +24,13 @@ public class JwtService {
     @Value("${jwt.expirationMs}")
     private long jwtExpirationMs;
 
-    public String generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication, List<String> roles) {
         OAuth2User principal = (OAuth2User) authentication.getPrincipal();
 
         String email;
         String name;
 
-        String roles = "ROLE_USER";
+        String rolesString = String.join(",", roles);
 
         if (principal instanceof OidcUser oidcUser) {
             email = oidcUser.getEmail();
@@ -48,7 +49,7 @@ public class JwtService {
                 .withSubject(email)
                 .withClaim("name", name)
                 .withClaim("scopes", scopes)
-                .withClaim("roles", roles)
+                .withClaim("roles", rolesString)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .sign(algorithm);

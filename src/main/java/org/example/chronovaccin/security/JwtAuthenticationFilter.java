@@ -44,12 +44,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 if (rolesString != null && !rolesString.isEmpty()) {
                     // Split the roles string and create GrantedAuthority objects
-                    String[] roles = rolesString.split(","); // or whatever delimiter you use
+                    String[] roles = rolesString.split(",");
                     for (String role : roles) {
-                        // Check if the role already starts with "ROLE_"
-//                        if (!role.startsWith("ROLE_")) {
-//                            role = "ROLE_" + role.trim().toUpperCase();  //add ROLE_ prefix if missing + trim and normalize
-//                        }
                         System.out.println("Access granted for user: " + username + " with role: " + role);
                         authorities.add(new SimpleGrantedAuthority(role));
                     }

@@ -1,5 +1,6 @@
 package org.example.chronovaccin.security;
 
+import org.example.chronovaccin.repository.UserRepository;
 import org.example.chronovaccin.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -7,13 +8,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -21,6 +29,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtService jwtService;
+
+    private UserRepository userRepository;
 
     public SecurityConfig(JwtService jwtService, ClientRegistrationRepository clientRegistrationRepository) {
         this.jwtService = jwtService;
@@ -50,10 +60,22 @@ public class SecurityConfig {
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return (request, response, authentication) -> {
-            String token = jwtService.generateToken(authentication);
+            List<String> roles = getRolesFromUser(authentication);
+            String token = jwtService.generateToken(authentication, roles);
             System.out.println(request.getRequestURI());
-            response.sendRedirect("/dashboard?token=" + token); // Redirige vers le dashboard avec le token
+            System.out.println(token);
+            response.sendRedirect("/dashboard"); // Redirige vers le dashboard avec le token
         };
+    }
+
+    private List<String> getRolesFromUser(Authentication authentication) {
+        OAuth2User principal = (OAuth2User) authentication.getPrincipal();
+        String userEmail = principal.getAttribute("email");
+        List<String> roles = userRepository.findRolesByEmail(userEmail);
+        System.out.println("Roles found with OAuth2 for user " + userEmail + ": " + roles);
+        return roles.stream()
+                .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role)
+                .toList();
     }
 
     @Bean
