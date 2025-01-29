@@ -1,15 +1,14 @@
 package org.example.chronovaccin.security;
 
+import org.example.chronovaccin.entities.User;
 import org.example.chronovaccin.repository.UserRepository;
 import org.example.chronovaccin.service.JwtService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
@@ -20,7 +19,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -30,10 +28,11 @@ public class SecurityConfig {
 
     private final JwtService jwtService;
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public SecurityConfig(JwtService jwtService, ClientRegistrationRepository clientRegistrationRepository) {
+    public SecurityConfig(JwtService jwtService, UserRepository userRepository, ClientRegistrationRepository clientRegistrationRepository) {
         this.jwtService = jwtService;
+        this.userRepository = userRepository;
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -71,7 +70,18 @@ public class SecurityConfig {
     private List<String> getRolesFromUser(Authentication authentication) {
         OAuth2User principal = (OAuth2User) authentication.getPrincipal();
         String userEmail = principal.getAttribute("email");
-        List<String> roles = userRepository.findRolesByEmail(userEmail);
+
+        List<String> roles = new ArrayList<>();
+        User user = userRepository.findByEmail(userEmail); //Fetch the user from db
+        if(user != null) { //check if user is found
+            if (user.getIs_user()) {
+                roles.add("ROLE_USER");
+            }
+            if (user.getIs_admin()) {
+                roles.add("ROLE_ADMIN");
+            }
+        }
+
         System.out.println("Roles found with OAuth2 for user " + userEmail + ": " + roles);
         return roles.stream()
                 .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role)

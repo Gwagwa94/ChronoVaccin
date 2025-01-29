@@ -2,8 +2,6 @@ package org.example.chronovaccin.entities;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name="utilisateurs")
 public class User {
@@ -16,4 +14,12 @@ public class User {
 
     @Column(name="is_admin")
     private Boolean is_admin;
+
+    public boolean getIs_user() {
+        return is_user;
+    }
+
+    public boolean getIs_admin() {
+        return is_admin;
+    }
 }

@@ -32,11 +32,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
+        System.out.println("In doFilterInternal");
 
         String token = extractJwtFromRequest(request);
 
         if (token != null) {
             DecodedJWT decodedJWT = jwtService.validateToken(token);
+            System.out.println("Decoded JWT: " + decodedJWT);
             if (decodedJWT != null) {
                 String username = decodedJWT.getSubject();
 
@@ -65,7 +67,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("{\"error\": \"Missing token\"}");
         }
 
         filterChain.doFilter(request, response);
@@ -77,6 +78,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
+        System.out.println("No token found");
         return null; // Do NOT fallback to the query parameter
     }
 }

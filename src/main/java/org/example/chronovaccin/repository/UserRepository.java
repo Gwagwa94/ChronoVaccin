@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u.is_user, u.is_admin FROM User u WHERE u.email = ?1")
     List<String> findRolesByEmail(String userEmail);
+
+    User findByEmail(String userEmail);
 }
