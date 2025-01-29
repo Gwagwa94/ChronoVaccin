@@ -28,8 +28,10 @@ public class JwtService {
 
         String email;
         String name;
-        if (principal instanceof OidcUser) {
-            OidcUser oidcUser = (OidcUser) principal;
+
+        String roles = "ROLE_USER";
+
+        if (principal instanceof OidcUser oidcUser) {
             email = oidcUser.getEmail();
             name = oidcUser.getFullName() != null ? oidcUser.getFullName() : oidcUser.getName();
         } else {
@@ -46,6 +48,7 @@ public class JwtService {
                 .withSubject(email)
                 .withClaim("name", name)
                 .withClaim("scopes", scopes)
+                .withClaim("roles", roles)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .sign(algorithm);

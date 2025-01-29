@@ -3,8 +3,8 @@ package org.example.chronovaccin.rest;
 import org.example.chronovaccin.entities.Center;
 import org.example.chronovaccin.exception.CenterNotFoundException;
 import org.example.chronovaccin.service.CenterService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -14,10 +14,14 @@ import java.util.List;
 @RestController
 public class CenterRestController {
 
-    @Autowired
-    private CenterService service;
+    private final CenterService service;
+
+    public CenterRestController(CenterService service) {
+        this.service = service;
+    }
 
     @GetMapping(path = "/centers")
+    @PreAuthorize(value = "hasRole('USER')")
     public List<Center> findAll(
             @RequestParam(name = "name", required = false) String filterByName,
             @RequestParam(name = "city", required = false) String filterByCity,
@@ -27,7 +31,7 @@ public class CenterRestController {
     }
 
     @GetMapping(path = "/center/{id}")
-    public Center findOne(@PathVariable("id") Integer id) throws CenterNotFoundException, CenterNotFoundException {
+    public Center findOne(@PathVariable("id") Integer id) throws CenterNotFoundException {
         return service.findOne(id);
     }
 
