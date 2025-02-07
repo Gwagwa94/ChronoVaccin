@@ -1,0 +1,39 @@
+services:
+  backend:
+    build:
+      context: ./  # Chemin vers le dossier contenant le Dockerfile du backend (ajuster si besoin)
+      dockerfile: Dockerfile  # Nom du Dockerfile du backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cloud-sql-proxy
+    environment:
+      # Ajoutez vos variables d'environnement ici si besoin
+      # Exemple :
+      # - SPRING_DATASOURCE_URL=jdbc:postgresql://cloud-sql-proxy:5434/your_database
+      # - SPRING_DATASOURCE_USERNAME=your_user
+      # - SPRING_DATASOURCE_PASSWORD=your_password
+      # Remplacez your_database, your_user et your_password par les valeurs correctes.
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cloud-sql-proxy:5434/chronovaccin
+      - SPRING_DATASOURCE_USERNAME=postgres #mettre le username postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres #mettre le password
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.PostgreSQLDialect
+      #Ajouter le reste des infos de connection de la BD si ça ne marche pas avec ça.
+
+
+  frontend:
+    build:
+      context: ./vaccination-frontend  # Chemin vers le dossier contenant le Dockerfile du frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"  # Mappage du port: port_hôte:port_conteneur
+    depends_on:
+      - backend
+
+  cloud-sql-proxy:
+    image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.9.0 #utiliser une image à jour si possible
+    command: chronovaccin:europe-west9:chronovaccin -p 5434
+    ports:
+      - "5434:5434" #pas obligatoire, mais pratique pour se connecter depuis l'hote, en cas de debug.
+    #Ajouter les credentials si besoin, voir doc cloud-sql-proxy
