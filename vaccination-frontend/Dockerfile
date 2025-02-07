@@ -8,7 +8,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm run build --prod --omit=dev
+RUN npm run build --prod
 
 # Étape 2: Servir l'application avec Nginx
 

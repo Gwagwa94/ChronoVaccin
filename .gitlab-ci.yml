@@ -1,0 +1,44 @@
+stages:
+  - build
+#  - deploy
+
+variables:
+  # Utilisez la variable DOCKER_HOST pour utiliser Docker-in-Docker (DinD)
+  DOCKER_HOST: tcp://docker:2375
+  # Désactive TLS pour la communication avec le daemon Docker (pour DinD)
+  DOCKER_TLS_CERTDIR: ""
+  # Nom de l'image Docker de l'application (vous pouvez le personnaliser)
+  IMAGE_NAME: "baumann74u/ChronoVaccin" # A remplacer par votre username et nom de projet
+  IMAGE_TAG: $CI_COMMIT_SHORT_SHA # Utilise le short SHA du commit comme tag
+
+# Service Docker-in-Docker (DinD) pour exécuter des commandes Docker à l'intérieur du job GitLab CI
+services:
+  - docker:dind
+
+before_script:
+  - docker info
+  - docker-compose --version
+
+build:
+  stage: build
+  image: docker/compose:latest
+  script:
+    - docker-compose build --no-cache
+    - docker-compose push
+
+##Un exemple de stage de deploy:
+#deploy:
+#  stage: deploy
+#  image: alpine
+#  script:
+#    - echo "Deploying application..."
+#    # Mettez ici les commandes pour déployer votre application.  Par exemple,
+#    # si vous utilisez une VM, vous pourriez utiliser SSH pour vous connecter
+#    # et faire un `docker-compose pull && docker-compose up -d`.
+#    #
+#    # Exemple (très simplifié) avec SSH :
+#    # - ssh user@your-server "docker-compose -f /path/to/your/docker-compose.yml pull && docker-compose -f /path/to/your/docker-compose.yml up -d"
+#  only:  # Déclenchez ce job uniquement sur la branche main
+#    - main
+#  #Vous devez configurer les variables d'environnement CI/CD pour le déploiement
+#  # (ex: SSH_PRIVATE_KEY).
