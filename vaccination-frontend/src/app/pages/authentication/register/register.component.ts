@@ -1,26 +1,30 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service'; // Chemin du service AuthService
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
 })
 export class AppSideRegisterComponent {
-  constructor(private router: Router) {}
+  form: FormGroup;
 
-  form = new FormGroup({
-    uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    email: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required]),
-  });
-
-  get f() {
-    return this.form.controls;
+  constructor(private authService: AuthService) {
+    this.form = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    });
   }
 
   submit() {
-    // console.log(this.form.value);
-    this.router.navigate(['/dashboard']);
+    if (this.form.valid) {
+      const { email, password } = this.form.value;
+      try {
+        this.authService.register(email, password);
+        alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
+      } catch (error: any) {
+        alert(error.message);
+      }
+    }
   }
 }

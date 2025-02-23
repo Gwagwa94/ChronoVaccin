@@ -8,10 +8,13 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 // icons
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
-import { AppDashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 @NgModule({
-  declarations: [AppDashboardComponent],
+  declarations: [DashboardComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -19,6 +22,8 @@ import { AppDashboardComponent } from './dashboard/dashboard.component';
     NgApexchartsModule,
     RouterModule.forChild(PagesRoutes),
     TablerIconsModule.pick(TablerIcons),
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [TablerIconsModule],
 })

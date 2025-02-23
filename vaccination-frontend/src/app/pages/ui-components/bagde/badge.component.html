@@ -1,31 +1,173 @@
-<mat-card class="cardWithShadow theme-card">
-    <mat-card-header>
-        <mat-card-title class="m-b-0">Médecins</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="b-t-1">
-        <mat-form-field appearance="outline" class="w-100">
-            <mat-label>Rechercher un médecin</mat-label>
-            <input
-                    matInput
-                    (input)="searchMedecins($event)"
-                    placeholder="Entrez un prénom ou un nom"
-            />
-        </mat-form-field>
+<div class="row">
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Actualités -->
+    <!-- --------------------------------------------------------------------------- -->
+    <div class="col-lg-4">
+        <mat-card class="cardWithShadow">
+            <mat-card-content class="p-24">
+                <mat-card-title>Actualités</mat-card-title>
 
-        <ng-container *ngIf="filteredMedecins.length > 0; else noMedecins">
-            <mat-card *ngFor="let medecin of filteredMedecins" class="b-1 shadow-none">
-                <mat-card-content>
-                    <p>
-            <span class="f-w-500 text-muted">
-              {{ medecin.firstname }} {{ medecin.lastname }}
-            </span>
-                    </p>
-                </mat-card-content>
-            </mat-card>
-        </ng-container>
+                <div class="timeline m-t-24">
+                    <div
+                            class="timeline-item d-flex overflow-hidden"
+                            *ngFor="let stat of stats"
+                    >
+                        <div class="time text-right mat-subtitle-1 f-s-14">
+                            {{ stat.time }}
+                        </div>
+                        <div class="point d-flex align-items-center">
+                            <span class="timeline-badge border-{{ stat.color }} m-y-8"></span>
+                            <span class="timeline-border d-block"></span>
+                        </div>
+                        <div class="desc">
+                            <ng-template [ngIf]="stat.subtext">
+                <span class="mat-subtitle-1 f-s-14 lh-20">{{
+                        stat.subtext
+                    }}</span>
+                            </ng-template>
+                            <ng-template [ngIf]="stat.title">
+                <span class="mat-subtitle-1 f-s-14 lh-20 f-w-600 d-block">{{
+                        stat.title
+                    }}</span>
+                            </ng-template>
+                            <ng-template [ngIf]="stat.link">
+                                <a href="#" class="text-primary text-decoration-none mat-body-1"
+                                >{{ stat.link }}</a
+                                >
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
 
-        <ng-template #noMedecins>
-            <p>Aucun médecin trouvé.</p>
-        </ng-template>
-    </mat-card-content>
-</mat-card>
+    <!-- --------------------------------------------------------------------------- -->
+    <!-- Mes Consultations -->
+    <!-- --------------------------------------------------------------------------- -->
+    <div class="col-lg-8">
+        <mat-card class="cardWithShadow">
+            <mat-card-content class="p-24">
+                <mat-card-title>Mes Consultations</mat-card-title>
+                <div class="table-responsive m-t-16">
+                    <table mat-table [dataSource]="dataSource" class="w-100">
+                        <!-- Assigned Column -->
+                        <ng-container matColumnDef="assigned">
+                            <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="f-w-600 mat-subtitle-1 f-s-14"
+                            >
+                                Médecin
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div class="d-flex align-items-center">
+                                    <img
+                                            src="assets/images/profile/user-{{ element.id }}.jpg"
+                                            alt="user"
+                                            width="40"
+                                            class="rounded-circle"
+                                    />
+                                    <div class="m-l-16">
+                                        <h6 class="mat-subtitle-1 f-s-14 f-w-600">
+                                            {{ element.uname }}
+                                        </h6>
+                                        <span class="mat-body-1 f-s-12">
+                      {{ element.position }}
+                    </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="f-w-600 mat-subtitle-1 f-s-14"
+                            >
+                                Name
+                            </th>
+                            <td mat-cell *matCellDef="let element" class="mat-body-1">
+                                {{ element.productName }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Status Column -->
+                        <ng-container matColumnDef="priority">
+                            <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="f-w-600 mat-subtitle-1 f-s-14"
+                            >
+                                Status
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <ng-template [ngIf]="element.priority === 'low'">
+                  <span
+                          class="bg-light-accent text-accent rounded f-w-600 p-6 p-y-4 f-s-12"
+                  >
+                    En Attente
+                  </span>
+                                </ng-template>
+                                <ng-template [ngIf]="element.priority === 'medium'">
+                  <span
+                          class="bg-light-primary text-primary rounded f-w-600 p-6 p-y-4 f-s-12"
+                  >
+                    Validé
+                  </span>
+                                </ng-template>
+                                <ng-template [ngIf]="element.priority === 'high'">
+                  <span
+                          class="bg-light-warning text-warning rounded f-w-600 p-6 p-y-4 f-s-12"
+                  >
+                    En Cours
+                  </span>
+                                </ng-template>
+                                <ng-template [ngIf]="element.priority === 'critical'">
+                  <span
+                          class="bg-light-error text-error rounded f-w-600 p-6 p-y-4 f-s-12"
+                  >
+                    Annulé
+                  </span>
+                                </ng-template>
+                            </td>
+                        </ng-container>
+
+                        <!-- date Column -->
+                        <ng-container matColumnDef="date">
+                            <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="f-w-600 mat-subtitle-1 f-s-14"
+                            >
+                                Date
+                            </th>
+                            <td mat-cell *matCellDef="let element" class="mat-body-1">
+                                {{ element.date }}
+                            </td>
+                        </ng-container>
+
+                        <!-- hour Column -->
+                        <ng-container matColumnDef="hour">
+                            <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="f-w-600 mat-subtitle-1 f-s-14"
+                            >
+                                Heure
+                            </th>
+                            <td mat-cell *matCellDef="let element" class="mat-body-1">
+                                {{ element.hour }}
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                    </table>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
