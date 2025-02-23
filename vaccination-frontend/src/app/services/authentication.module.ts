@@ -14,13 +14,13 @@ import * as TablerIcons from 'angular-tabler-icons/icons';
 
 import { AuthenticationRoutes } from './authentication.routing';
 
-import { AppSideLoginComponent } from './login/login.component';
-import { AppSideRegisterComponent } from './register/register.component';
+import { AppSideLoginComponent } from '../pages/authentication/login/login.component';
+import { AppSideRegisterComponent } from '../pages/authentication/register/register.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(AuthenticationRoutes),
+    RouterModule.forChild(AuthenticationRoutes), // Utilisez le bon tableau ici
     MatIconModule,
     MatCardModule,
     MatInputModule,

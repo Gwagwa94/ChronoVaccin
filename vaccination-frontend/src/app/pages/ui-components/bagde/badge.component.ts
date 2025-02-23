@@ -1,37 +1,95 @@
-import { Component, OnInit } from '@angular/core';
-import { MedecinService, Medecin } from '../../../services/medecin.service';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import {
+  ApexChart,
+  ChartComponent,
+  ApexDataLabels,
+  ApexLegend,
+  ApexStroke,
+  ApexTooltip,
+  ApexAxisChartSeries,
+  ApexXAxis,
+  ApexYAxis,
+  ApexGrid,
+  ApexPlotOptions,
+  ApexFill,
+  ApexMarkers,
+  ApexResponsive,
+} from 'ng-apexcharts';
+
+interface stats {
+  id: number;
+  time: string;
+  color: string;
+  subtext?: string;
+  title?: string;
+  link?: string;
+}
+
+export interface productsData {
+  id: number;
+  uname: string;
+  position: string;
+  productName: string;
+  date: string;
+  priority: string;
+  hour: string;
+}
 
 @Component({
   selector: 'app-badge',
   templateUrl: './badge.component.html',
+  encapsulation: ViewEncapsulation.None,
 })
-export class AppBadgeComponent implements OnInit {
-  medecins: Medecin[] = [];
-  filteredMedecins: Medecin[] = [];
+export class AppBadgeComponent {
+  @ViewChild('chart') chart: ChartComponent = Object.create(null);
 
-  constructor(private medecinService: MedecinService) {}
+  displayedColumns: string[] = ['assigned', 'name', 'priority', 'date', 'hour'];
+  dataSource: productsData[] = [];
+  stats: stats[] = [];
 
-  ngOnInit(): void {
-    this.loadMedecins();
-  }
+  constructor() {
+    // Charger les données récentes des transactions depuis la base
+    this.stats = [
+      {
+        id: 1,
+        time: '09:00 am',
+        color: 'primary',
+        subtext: 'Consultation confirmée avec Dr. Martin.',
+      },
+      {
+        id: 2,
+        time: '10:30 am',
+        color: 'accent',
+        subtext: 'Consultation annulée avec Dr. Durand.',
+      },
+      {
+        id: 3,
+        time: '12:00 pm',
+        color: 'success',
+        subtext: 'Nouvelle consultation ajoutée avec Dr. Dupont.',
+      },
+    ];
 
-  loadMedecins() {
-    this.medecinService.getMedecins().subscribe((data) => {
-      this.medecins = data;
-      this.filteredMedecins = data; // Initialisation pour afficher tous les médecins
-    });
-  }
-
-  searchMedecins(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    const query = inputElement.value.trim().toLowerCase();
-    if (query) {
-      this.filteredMedecins = this.medecins.filter(
-          (medecin) =>
-              `${medecin.firstname} ${medecin.lastname}`.toLowerCase().includes(query)
-      );
-    } else {
-      this.filteredMedecins = [...this.medecins];
-    }
+    // Charger les données des médecins en tant que "Top Projects"
+    this.dataSource = [
+      {
+        id: 1,
+        uname: 'Jean Dupont',
+        position: 'Cardiologie',
+        productName: 'Centre Médical Paris',
+        date: '27/01/25',
+        priority: 'critical',
+        hour: '10h00',
+      },
+      {
+        id: 2,
+        uname: 'Marie Curie',
+        position: 'Neurologie',
+        productName: 'Centre Médical Lyon',
+        date: '30/01/25', // Exemple de budget
+        priority: 'high',
+        hour: '16h30',
+      },
+    ];
   }
 }
