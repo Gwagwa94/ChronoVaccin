@@ -20,7 +20,7 @@ public class CenterService {
         } else if (name != null) {
             return centerRepository.findByName(name);
         } else if (postalCode != null) {
-            return centerRepository.findByAddressPostalCode(postalCode);
+            return centerRepository.findByPostalCode(postalCode);
         } else {
             return centerRepository.findAll();
         }

@@ -11,8 +11,8 @@ public class Center {
     private Integer id;
     @Column(name="nom")
     private String name;
-    @OneToOne
-    @JoinColumn(name="adresse_id", foreignKey = @ForeignKey(name="centres_adresse_id_fkey"))
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="adresse_id", foreignKey = @ForeignKey(name="centres_adresse_id_fkey"), referencedColumnName = "id")
     private Address address;
     @Column(name="telephone")
     private String phone;

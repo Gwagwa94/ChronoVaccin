@@ -15,6 +15,11 @@ public class DoctorService {
     private DoctorRepository doctorRepository;
 
     public List<Doctor> findAll(String name) {
+        if (name == null || name.isEmpty()) {
+            System.out.println("GET: Find all doctors");
+            return doctorRepository.findAll();
+        }
+        System.out.println("GET: Find doctors by name: " + name);
         return doctorRepository.findByLastname(name);
     }
 
