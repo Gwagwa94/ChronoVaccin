@@ -21,7 +21,7 @@ export class AppChipsComponent implements OnInit {
   }
 
   loadCentres() {
-    this.http.get<Centre[]>('http://localhost:8080/api/centers').subscribe((data) => {
+    this.http.get<Centre[]>('http://localhost:8080/centers').subscribe((data) => {
       this.centres = data;
       this.filteredCentres = [...data];
     });
@@ -30,7 +30,7 @@ export class AppChipsComponent implements OnInit {
   loadMedecins(centreId: number) {
     this.selectedCentreId = centreId;
     this.http
-        .get<Medecin[]>(`http://localhost:8080/api/doctors?centreId=${centreId}`)
+        .get<Medecin[]>(`http://localhost:8080/doctors?centreId=${centreId}`)
         .subscribe((data) => {
           this.medecins = data;
         });
