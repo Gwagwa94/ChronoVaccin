@@ -12,10 +12,7 @@
   class="menu-list-item"
   *ngIf="!item.navCap"
 >
-  <i-tabler
-    class="routeIcon"
-    name="{{ item.iconName }}"
-    matListItemIcon
-  ></i-tabler>
-  <span class="hide-menu">{{ item.displayName }}</span>
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+
+    <span class="hide-menu">{{ item.displayName }}</span>
 </a>

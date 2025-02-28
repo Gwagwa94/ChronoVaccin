@@ -13,13 +13,13 @@ export const navItems: NavItem[] = [
     navCap: 'Recherche',
   },
   {
-    displayName: 'Mon Espace',
-    iconName: 'accessible',
+    displayName: 'Médecin',
+    iconName: 'rosette',
     route: '/ui-components/badge',
   },
   {
     displayName: 'Centre',
-    iconName: 'home',
+    iconName: 'poker-chip',
     route: '/ui-components/chips',
   },
   {

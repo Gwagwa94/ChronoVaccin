@@ -27,7 +27,8 @@ async function createDoctor() {
   try {
     const response = await axios.post('http://localhost:8080/doctors', doctor, {
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJncmVnb2lyZWJhdW1hbm45NEBnbWFpbC5jb20iLCJpc3MiOiJDaHJvbm9WYWNjaW4iLCJyb2xlcyI6Ik9JRENfVVNFUixTQ09QRV9odHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS9hdXRoL3VzZXJpbmZvLmVtYWlsLFNDT1BFX2h0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvdXNlcmluZm8ucHJvZmlsZSxTQ09QRV9vcGVuaWQiLCJpYXQiOjE3NDA3NjE3OTksImV4cCI6MTc0MDg0ODE5OX0.uFzu8TGZHQb0-amG037mRbeRfV-nLP67p0pC5ppXawE'
       }
     });
     console.log(response.status)

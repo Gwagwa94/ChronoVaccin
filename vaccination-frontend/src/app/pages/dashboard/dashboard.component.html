@@ -1,43 +1,68 @@
 <div class="container">
-    <mat-card class="cardWithShadow">
-        <mat-card-title class="text-center">Prise de Rendez-vous</mat-card-title>
+    <!-- Barre de recherche de ville (pleine largeur) -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <mat-form-field appearance="outline" style="width: 80%;">
+                <mat-label>Rechercher une ville</mat-label>
+                <input matInput placeholder="Entrez une ville" [(ngModel)]="searchCity" />
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="onSearchCity()">
+                Rechercher
+            </button>
+        </div>
+    </div>
+
+    <!-- Boucle sur chaque médecin filtré par la recherche -->
+    <mat-card *ngFor="let doctor of filteredDoctors" class="mt-4">
         <mat-card-content>
-            <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
-                <!-- Sélection du Centre -->
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Centre Médical</mat-label>
-                    <mat-select formControlName="center">
-                        <mat-option *ngFor="let center of centers" [value]="center.id">
-                            {{ center.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <!-- Sélection du Médecin -->
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Médecin</mat-label>
-                    <mat-select formControlName="doctor">
-                        <mat-option *ngFor="let doctor of filteredDoctors" [value]="doctor.id">
-                            {{ doctor.name }} ({{ doctor.speciality }})
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <!-- Sélection de la Date -->
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>Date</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="date" />
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-
-                <!-- Bouton de soumission -->
-                <div class="text-center m-t-16">
-                    <button mat-raised-button color="primary" type="submit" [disabled]="!appointmentForm.valid">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>{{ doctor.name }}</h3>
+                    <p>{{ doctor.speciality }}</p>
+                    <p>{{ doctor.address }}</p>
+                    <button mat-raised-button color="primary" class="mb-3" (click)="openAppointmentForm(doctor)">
                         Prendre Rendez-vous
                     </button>
                 </div>
-            </form>
+                <!-- Tableau du calendrier (colonne de gauche) -->
+                <div class="col-md-8">
+                    <table class="table table-bordered text-center" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th>Vendredi</th>
+                            <th>Samedi</th>
+                            <th>Dimanche</th>
+                            <th>Lundi</th>
+                            <th>Mardi</th>
+                            <th>Mercredi</th>
+                        </tr>
+                        <tr>
+                            <th>28 févr.</th>
+                            <th>1 mars</th>
+                            <th>2 mars</th>
+                            <th>3 mars</th>
+                            <th>4 mars</th>
+                            <th>5 mars</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- On parcourt la liste des horaires définis dans timeSlots -->
+                        <tr *ngFor="let hour of timeSlots">
+                            <td *ngFor="let day of ['28 févr.', '1 mars', '2 mars', '3 mars', '4 mars', '5 mars']">
+                                <button
+                                        *ngIf="doctor.availability[day]?.includes(hour)"
+                                        mat-flat-button color="accent"
+                                        (click)="bookAppointment(doctor, day, hour)"
+                                >
+                                    {{ hour }}
+                                </button>
+                                <span *ngIf="!doctor.availability[day]?.includes(hour)">-</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>
