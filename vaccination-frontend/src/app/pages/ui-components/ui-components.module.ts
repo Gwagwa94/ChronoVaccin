@@ -5,8 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material.module';
 
 // icons
-import { TablerIconsModule } from 'angular-tabler-icons';
-import * as TablerIcons from 'angular-tabler-icons/icons';
 
 import { UiComponentsRoutes } from './ui-components.routing';
 
@@ -25,7 +23,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    TablerIconsModule.pick(TablerIcons),
     MatNativeDateModule,
   ],
   declarations: [

@@ -41,14 +41,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-// Reactive Forms (ajouté pour le formulaire)
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [],
   exports: [
-    // Form Controls
     MatAutocompleteModule,
     MatCheckboxModule,
     MatDatepickerModule,
@@ -58,11 +54,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     MatSliderModule,
     MatSlideToggleModule,
-    // Navigation
     MatMenuModule,
     MatSidenavModule,
     MatToolbarModule,
-    // Layout
     MatCardModule,
     MatDividerModule,
     MatExpansionModule,
@@ -71,7 +65,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatStepperModule,
     MatTabsModule,
     MatTreeModule,
-    // Buttons & Indicators
     MatButtonModule,
     MatButtonToggleModule,
     MatBadgeModule,
@@ -80,19 +73,13 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatRippleModule,
-    // Popups & Modals
     MatBottomSheetModule,
     MatDialogModule,
     MatSnackBarModule,
     MatTooltipModule,
-    // Data Tables
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    // Reactive Forms (utilisé pour formGroup dans votre code)
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
   ],
 })
 export class MaterialModule {}

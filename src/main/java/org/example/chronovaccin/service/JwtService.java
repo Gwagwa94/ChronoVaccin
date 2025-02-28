@@ -1,14 +1,14 @@
 package org.example.chronovaccin.service;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -24,49 +24,41 @@ public class JwtService {
     private long jwtExpirationMs;
 
     public String generateToken(Authentication authentication) {
-        OAuth2User principal = (OAuth2User) authentication.getPrincipal();
+        // Extract user details from authentication object
+        OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+        String username = oauth2User.getAttribute("email");
 
-        String email;
-        String name;
-        if (principal instanceof OidcUser) {
-            OidcUser oidcUser = (OidcUser) principal;
-            email = oidcUser.getEmail();
-            name = oidcUser.getFullName() != null ? oidcUser.getFullName() : oidcUser.getName();
-        } else {
-            email = principal.getAttribute("email");
-            name = principal.getAttribute("name");
-        }
-
-        String scopes = principal.getAuthorities().stream()
+        // Get roles
+        String roles = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
+                .collect(Collectors.joining(","));
 
+        // Generate the token
         Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
         return JWT.create()
-                .withSubject(email)
-                .withClaim("name", name)
-                .withClaim("scopes", scopes)
+                .withSubject(username)
+                .withIssuer("ChronoVaccin")
+                .withClaim("roles", roles)
                 .withIssuedAt(new Date())
-                .withExpiresAt(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .withExpiresAt(new Date((new Date()).getTime() + jwtExpirationMs))
                 .sign(algorithm);
     }
 
-    public DecodedJWT validateToken(String token) {
+    public boolean validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
-            return JWT.require(algorithm)
-                    .build()
-                    .verify(token);
-        } catch (JWTVerificationException exception){
-            return null;
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer("ChronoVaccin").build();
+            verifier.verify(token); // This will throw an exception if the token is invalid
+            return true;
+        } catch (JWTVerificationException e) {
+            return false;
         }
     }
 
-    public String getUsernameFromToken(String token) {
-        DecodedJWT decodedJWT = validateToken(token);
-        if (decodedJWT != null) {
-            return decodedJWT.getSubject();
-        }
-        return null;
+    public String extractUsername(String token) {
+        Algorithm algorithm = Algorithm.HMAC256(jwtSecret);
+        JWTVerifier verifier = JWT.require(algorithm).withIssuer("ChronoVaccin").build();
+        DecodedJWT decodedJWT = verifier.verify(token);
+        return decodedJWT.getSubject();
     }
 }

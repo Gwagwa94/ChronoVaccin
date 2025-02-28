@@ -1,7 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></head>
+<body>
 <mat-toolbar class="topbar">
   <!-- Mobile Menu -->
   <button mat-icon-button (click)="toggleMobileNav.emit()" *ngIf="!showToggle">
-    <i-tabler name="menu-2" class="icon-20 d-flex"></i-tabler>
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
   </button>
   <!-- --------------------------------------------------------------- -->
 
@@ -10,12 +16,8 @@
   <!-- --------------------------------------------------------------- -->
 
   <button mat-icon-button aria-label="Notifications">
-    <i-tabler
-      class="d-flex"
-      name="bell"
-      matBadge="1"
-      matBadgeColor="primary"
-    ></i-tabler>
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+
   </button>
 
   <span class="flex-1-auto"></span>
@@ -26,11 +28,11 @@
   <a
     mat-flat-button
     color="primary"
-    href="/ui-components/chips"
+    href="https://adminmart.com/product/modernize-angular-admin-dashboard/"
     target="_blank"
     class="d-flex justify-content-center"
   >
-    Trouver un practicien
+    Download Free
   </a>
   <button
     mat-icon-button
@@ -45,22 +47,19 @@
   </button>
   <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
     <button mat-menu-item>
-      <mat-icon class="d-flex align-items-center"
-        ><i-tabler name="user" class="icon-18 d-flex"></i-tabler></mat-icon
-      >Mon Profil
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+
+        My Profile
     </button>
     <button mat-menu-item>
-      <mat-icon class="d-flex align-items-center"
-        ><i-tabler name="mail" class="icon-18 d-flex"></i-tabler></mat-icon
-      >Mon Compte
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+
+        My Account
     </button>
     <button mat-menu-item>
-      <mat-icon class="d-flex align-items-center"
-        ><i-tabler
-          name="list-check"
-          class="icon-18 d-flex"
-        ></i-tabler></mat-icon
-      >Mes Rendez-Vous
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+
+        My Task
     </button>
 
     <div class="p-x-12 m-t-12">
@@ -69,8 +68,10 @@
         mat-stroked-button
         color="primary"
         class="w-100"
-        >Se Deconnecter</a
+        >Logout</a
       >
     </div>
   </mat-menu>
 </mat-toolbar>
+</body>
+</html>

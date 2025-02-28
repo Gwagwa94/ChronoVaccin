@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,43 +6,94 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  appointmentForm: FormGroup;
-  centers = [
-    { id: 1, name: 'Centre Médical Paris' },
-    { id: 2, name: 'Centre Médical Lyon' },
+  // Saisie de la ville
+  searchCity: string = '';
+
+  // Horaires possibles
+  timeSlots: string[] = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
+
+  // Liste complète des médecins
+  doctors = [
+    {
+      id: 1,
+      name: 'Dr Sophie SEANG',
+      speciality: 'Infectiologue',
+      address: '6 Rue du Chemin Vert',
+      zipCode: '75011',
+      city: 'Paris',
+      availability: {
+        '28 févr.': ['09:00', '10:00'],
+        '1 mars': ['09:00', '14:00'],
+        '2 mars': [],
+        '3 mars': ['10:00'],
+        '4 mars': ['09:00', '16:00'],
+        '5 mars': [],
+      },
+    },
+    {
+      id: 2,
+      name: 'Dr Jean Dupont',
+      speciality: 'Cardiologie',
+      address: '10 Avenue de la République',
+      zipCode: '75011',
+      city: 'Paris',
+      availability: {
+        '28 févr.': [],
+        '1 mars': ['09:00', '10:00', '15:00'],
+        '2 mars': ['10:00'],
+        '3 mars': [],
+        '4 mars': ['14:00'],
+        '5 mars': ['09:00', '11:00'],
+      },
+    },
+    {
+      id: 3,
+      name: 'Dr Pierre Martin',
+      speciality: 'Généraliste',
+      address: '1 Rue des Fleurs',
+      zipCode: '69001',
+      city: 'Lyon',
+      availability: {
+        '28 févr.': ['09:00'],
+        '1 mars': [],
+        '2 mars': [],
+        '3 mars': ['10:00', '15:00'],
+        '4 mars': [],
+        '5 mars': ['09:00', '16:00'],
+      },
+    },
+    // Ajoutez d’autres médecins si besoin
   ];
-  doctors: { id: number; name: string; speciality: string; centerId: number }[] = [
-    { id: 1, name: 'Jean Dupont', speciality: 'Cardiologie', centerId: 1 },
-    { id: 2, name: 'Marie Curie', speciality: 'Neurologie', centerId: 2 },
-  ];
-  filteredDoctors: { id: number; name: string; speciality: string; centerId: number }[] = [];
 
-  constructor(private fb: FormBuilder) {
-    this.appointmentForm = this.fb.group({
-      center: [''],
-      doctor: [''],
-      date: [''],
-    });
-  }
+  // Médecins filtrés
+  filteredDoctors: any[] = [];
 
-  ngOnInit(): void {
-    this.appointmentForm.get('center')?.valueChanges.subscribe((centerId) => {
-      this.filteredDoctors = this.doctors.filter((doctor) => doctor.centerId === centerId);
-      this.appointmentForm.get('doctor')?.setValue('');
-    });
-  }
+  constructor() {}
 
-  onSubmit(): void {
-    if (this.appointmentForm.valid) {
-      const appointmentData = this.appointmentForm.value;
-      console.log('Rendez-vous pris avec succès :', appointmentData);
-      alert(
-          `Rendez-vous pris avec succès au ${this.centers.find(
-              (c) => c.id === appointmentData.center
-          )?.name} avec le Dr. ${
-              this.doctors.find((d) => d.id === appointmentData.doctor)?.name
-          } le ${appointmentData.date}`
-      );
+  ngOnInit(): void {}
+
+  // Méthode appelée quand on clique sur "Rechercher"
+  onSearchCity(): void {
+    if (!this.searchCity) {
+      this.filteredDoctors = [];
+      return;
     }
+    // Filtre sur la ville (en minuscule pour ignorer la casse)
+    this.filteredDoctors = this.doctors.filter((doctor) =>
+        doctor.city.toLowerCase().includes(this.searchCity.toLowerCase())
+    );
+  }
+
+  // Méthode simulant la prise de rendez-vous en cliquant sur un créneau
+  bookAppointment(doctor: any, date: string, hour: string) {
+    alert(
+        `Vous avez choisi un rendez-vous avec ${doctor.name} 
+       (${doctor.speciality}) le ${date} à ${hour}.`
+    );
+  }
+
+  // Bouton "Prendre Rendez-vous" (en-dessous du nom)
+  openAppointmentForm(doctor: any) {
+    alert(`Formulaire de rendez-vous pour ${doctor.name}.`);
   }
 }

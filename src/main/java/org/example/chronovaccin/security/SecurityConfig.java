@@ -6,12 +6,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,16 +26,23 @@ public class SecurityConfig {
     @Autowired
     private ClientRegistrationRepository clientRegistrationRepository;
 
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter; // Inject the filter
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF (for simplicity in this example)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))// make the session stateless
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/login**", "/webjars/**", "/error**", "/oauth2/authorization/**").permitAll() // Autorise l'accès à la page d'erreur OAuth2
-                        .anyRequest().authenticated()
+                        .requestMatchers("/", "/login**", "/webjars/**", "/error**", "/oauth2/authorization/**").permitAll() // Allow OAuth2 and login
+                        .anyRequest().authenticated() // All other requests need authentication
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
                         .successHandler(authenticationSuccessHandler())
-                );
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter
+
         return http.build();
     }
 
@@ -40,7 +50,8 @@ public class SecurityConfig {
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return (request, response, authentication) -> {
             String token = jwtService.generateToken(authentication);
-            response.sendRedirect("/dashboard?token=" + token); // Redirige vers le dashboard avec le token
+            System.out.println(token);
+            response.sendRedirect("http://localhost:4200/dashboard?token=" + token); // Redirect with the token
         };
     }
 

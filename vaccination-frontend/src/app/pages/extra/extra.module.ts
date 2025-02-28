@@ -5,9 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material.module';
 
 // icons
-import { TablerIconsModule } from 'angular-tabler-icons';
-import * as TablerIcons from 'angular-tabler-icons/icons';
-
 import { ExtraRoutes } from './extra.routing';
 import { AppIconsComponent } from './icons/icons.component';
 import { AppSamplePageComponent } from './sample-page/sample-page.component';
@@ -20,7 +17,6 @@ import { AppSamplePageComponent } from './sample-page/sample-page.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    TablerIconsModule.pick(TablerIcons),
   ],
   declarations: [
     AppIconsComponent,

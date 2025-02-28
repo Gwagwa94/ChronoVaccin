@@ -11,22 +11,19 @@ export interface Address {
 export interface Centre {
     id: number;
     name: string;
-    address: Address | null; // L'adresse peut être null si non définie
-    phone: string | null;
+    address: Address;
+    phone: string;
 }
 
 @Injectable({
     providedIn: 'root',
 })
 export class CentreService {
-    private apiUrl = 'http://localhost:8080/centers';
+    private apiUrl = 'http://localhost:8080/api/centers';
 
     constructor(private http: HttpClient) {}
 
     getCentres(): Observable<Centre[]> {
         return this.http.get<Centre[]>(this.apiUrl);
-    }
-    searchCentresByPostalCode(postalCode: string): Observable<Centre[]> {
-        return this.http.get<Centre[]>(`${this.apiUrl}?postalCode=${postalCode}`);
     }
 }
