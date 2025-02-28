@@ -67,10 +67,13 @@ export class DashboardComponent implements OnInit {
 
   // Médecins filtrés
   filteredDoctors: any[] = [];
+  suggestions: string[] = [];
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   // Méthode appelée quand on clique sur "Rechercher"
   onSearchCity(): void {
@@ -78,9 +81,10 @@ export class DashboardComponent implements OnInit {
       this.filteredDoctors = [];
       return;
     }
-    // Filtre sur la ville (en minuscule pour ignorer la casse)
+    // Filtre sur la ville ou le code postal (en minuscule pour ignorer la casse)
     this.filteredDoctors = this.doctors.filter((doctor) =>
-        doctor.city.toLowerCase().includes(this.searchCity.toLowerCase())
+        doctor.city.toLowerCase().includes(this.searchCity.toLowerCase()) ||
+        doctor.zipCode.includes(this.searchCity)
     );
   }
 
@@ -95,5 +99,25 @@ export class DashboardComponent implements OnInit {
   // Bouton "Prendre Rendez-vous" (en-dessous du nom)
   openAppointmentForm(doctor: any) {
     alert(`Formulaire de rendez-vous pour ${doctor.name}.`);
+  }
+
+  // Méthode pour filtrer les suggestions en fonction de la saisie
+  autocompleteCity(): void {
+    if (!this.searchCity) {
+      this.suggestions = [];
+      return;
+    }
+    const matches = [...new Set(this.doctors.map(doctor => doctor.city)
+        .concat(this.doctors.map(doctor => doctor.zipCode)))];
+
+    this.suggestions = matches.filter(entry =>
+        entry.toLowerCase().startsWith(this.searchCity.toLowerCase()));
+  }
+
+// Méthode pour sélectionner une suggestion et remplir le champ de recherche
+  selectSuggestion(suggestion: string): void {
+    this.searchCity = suggestion;
+    this.suggestions = [];
+    this.onSearchCity();
   }
 }

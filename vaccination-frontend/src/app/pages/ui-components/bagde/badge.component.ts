@@ -86,9 +86,27 @@ export class AppBadgeComponent {
         uname: 'Marie Curie',
         position: 'Neurologie',
         productName: 'Centre Médical Lyon',
-        date: '30/01/25', // Exemple de budget
+        date: '30/03/25',
         priority: 'high',
         hour: '16h30',
+      },
+      {
+        id: 3,
+        uname: 'Grey Smart',
+        position: 'Chirurgien',
+        productName: 'Centre Médical Lyon',
+        date: '30/03/25',
+        priority: 'medium',
+        hour: '18h30',
+      },
+      {
+        id: 4,
+        uname: 'Quentin Milou',
+        position: 'Podologue',
+        productName: 'Centre Médical Lyon',
+        date: '15/04/25',
+        priority: 'low',
+        hour: '18h30',
       },
     ];
   }

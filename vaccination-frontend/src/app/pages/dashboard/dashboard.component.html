@@ -2,15 +2,23 @@
     <!-- Barre de recherche de ville (pleine largeur) -->
     <div class="row mb-3">
         <div class="col-12">
-            <mat-form-field appearance="outline" style="width: 80%;">
+            <mat-form-field appearance="outline" style="width: 100%;">
                 <mat-label>Rechercher une ville</mat-label>
-                <input matInput placeholder="Entrez une ville" [(ngModel)]="searchCity" />
+                <input matInput placeholder="Entrez une ville ou un code postal" [(ngModel)]="searchCity" (input)="autocompleteCity()" />
+                <mat-icon matSuffix></mat-icon>
+                <button mat-icon-button matSuffix color="primary" (click)="onSearchCity()">
+                    <mat-icon>search</mat-icon>
+                </button>
             </mat-form-field>
-            <button mat-raised-button color="primary" (click)="onSearchCity()">
-                Rechercher
-            </button>
+
+            <ul *ngIf="suggestions.length > 0" class="autocomplete-list">
+                <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+                    {{ suggestion }}
+                </li>
+            </ul>
         </div>
     </div>
+
 
     <!-- Boucle sur chaque médecin filtré par la recherche -->
     <mat-card *ngFor="let doctor of filteredDoctors" class="mt-4">

@@ -27,6 +27,7 @@
       height: 45px;
       padding: 8px 10px !important;
       margin-bottom: 2px;
+      margin-right: 4px;
       &.twoline {
         height: 60px;
         align-items: center;
@@ -59,7 +60,8 @@
       .mdc-list-item__primary-text {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: left;
+
       }
     }
   }

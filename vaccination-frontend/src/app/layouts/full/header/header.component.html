@@ -11,29 +11,13 @@
   </button>
   <!-- --------------------------------------------------------------- -->
 
-  <!-- --------------------------------------------------------------- -->
-  <!-- Notification Dropdown -->
-  <!-- --------------------------------------------------------------- -->
-
-  <button mat-icon-button aria-label="Notifications">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
-
-  </button>
 
   <span class="flex-1-auto"></span>
 
   <!-- --------------------------------------------------------------- -->
   <!-- profile Dropdown -->
   <!-- --------------------------------------------------------------- -->
-  <a
-    mat-flat-button
-    color="primary"
-    href="https://adminmart.com/product/modernize-angular-admin-dashboard/"
-    target="_blank"
-    class="d-flex justify-content-center"
-  >
-    Download Free
-  </a>
+
   <button
     mat-icon-button
     [matMenuTriggerFor]="profilemenu"
@@ -47,19 +31,19 @@
   </button>
   <mat-menu #profilemenu="matMenu" class="topbar-dd cardWithShadow">
     <button mat-menu-item>
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="perm_identity"></mat-icon>
 
-        My Profile
+        Mon Profile
     </button>
     <button mat-menu-item>
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="new_releases"></mat-icon>
 
-        My Account
+        Actualités
     </button>
     <button mat-menu-item>
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="local_hospital"></mat-icon>
 
-        My Task
+        Centres
     </button>
 
     <div class="p-x-12 m-t-12">

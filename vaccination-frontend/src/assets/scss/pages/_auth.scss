@@ -30,6 +30,7 @@
   &.row {
     margin-right: -8px;
     margin-left: -8px;
+
     .col-2,
     .col-12 {
       padding-right: 8px;
@@ -69,4 +70,26 @@
 
 .max-width-form {
   max-width: 450px;
+}
+
+.autocomplete-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 5px;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  width: 80%;
+  z-index: 10;
+}
+
+.autocomplete-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.autocomplete-list li:hover {
+  background-color: #f0f0f0;
 }
