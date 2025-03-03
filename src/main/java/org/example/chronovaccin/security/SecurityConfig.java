@@ -1,5 +1,6 @@
 package org.example.chronovaccin.security;
 
+import jakarta.servlet.http.Cookie;
 import org.example.chronovaccin.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -51,7 +52,16 @@ public class SecurityConfig {
         return (request, response, authentication) -> {
             String token = jwtService.generateToken(authentication);
             System.out.println(token);
-            response.sendRedirect("http://localhost:4200/dashboard?token=" + token); // Redirect with the token
+
+            // Create a cookie
+            Cookie jwtCookie = new Cookie("jwtToken", token);
+            jwtCookie.setHttpOnly(true);
+            jwtCookie.setPath("/"); // set the path to be accessible everywhere in the website
+            jwtCookie.setMaxAge(24*60*60); // set the duration of the cookie (one day)
+            response.addCookie(jwtCookie);
+
+            // Redirect to the dashboard without the token in the URI
+            response.sendRedirect("http://localhost:4200/dashboard");
         };
     }
 

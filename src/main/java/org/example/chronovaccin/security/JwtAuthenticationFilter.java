@@ -2,6 +2,7 @@ package org.example.chronovaccin.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.chronovaccin.service.JwtService;
@@ -16,6 +17,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -30,11 +33,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        //1. try to extract the token
-        String authHeader = request.getHeader("Authorization");
+        //1. try to extract the token from the cookie
         String token = null;
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            token = authHeader.substring(7);
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            Optional<Cookie> cookie = Arrays.stream(cookies).filter(c -> c.getName().equals("jwtToken")).findFirst();
+            if (cookie.isPresent()){
+                token = cookie.get().getValue();
+            }
         }
         //2. if there is a token
         if (token != null) {
